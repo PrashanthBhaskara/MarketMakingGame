@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Market Maker Card Game</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow">Four-player sum contract</p>
+          <h1>Market Maker Card Game</h1>
+        </div>
+        <button id="resetButton" class="secondary-button" type="button">New deal</button>
+      </header>
+
+      <main>
+        <section id="setupPanel" class="setup-panel">
+          <div class="setup-copy">
+            <h2>Game setup</h2>
+            <p>
+              The deck has one card of each rank from 2 through A. Everyone sees only their own
+              private card and any revealed board cards. The contract settles to the sum of all
+              four private cards plus the three board cards.
+            </p>
+            <p>
+              Rule assumption used here: play the configured number of markets, reveal one board
+              card, repeat. The game settles immediately after the third board card is revealed.
+            </p>
+          </div>
+
+          <div class="settings-grid">
+            <label>
+              Markets before each reveal
+              <input id="marketsPerStageInput" type="number" min="1" max="10" step="1" value="5">
+            </label>
+            <label>
+              Quote response seconds
+              <input id="responseSecondsInput" type="number" min="1" max="30" step="0.5" value="3">
+            </label>
+            <label>
+              Maker pay before first reveal
+              <input id="feeStage0Input" type="number" min="0" max="50" step="0.25" value="2">
+            </label>
+            <label>
+              Maker pay after one reveal
+              <input id="feeStage1Input" type="number" min="0" max="50" step="0.25" value="2">
+            </label>
+            <label>
+              Maker pay after two reveals
+              <input id="feeStage2Input" type="number" min="0" max="50" step="0.25" value="2">
+            </label>
+            <label class="toggle-label">
+              <input id="hideAidsInput" type="checkbox">
+              <span>Practice mode: hide live position and market state</span>
+            </label>
+          </div>
+
+          <button id="startButton" class="primary-button" type="button">Shuffle and deal</button>
+        </section>
+
+        <section id="gamePanel" class="game-grid" hidden>
+          <section class="table-zone" aria-label="Game table">
+            <div id="opponentRow" class="opponent-row"></div>
+
+            <div class="board-strip">
+              <div>
+                <p class="eyebrow">Board cards</p>
+                <div id="boardCards" class="board-cards"></div>
+              </div>
+              <div id="stageBadge" class="stage-badge"></div>
+            </div>
+
+            <div id="humanSeat" class="human-seat"></div>
+          </section>
+
+          <aside class="control-rail">
+            <section id="marketSummary" class="summary-panel"></section>
+            <section id="phaseControls" class="action-panel"></section>
+            <section class="log-panel">
+              <div class="panel-heading">
+                <h2>Market tape</h2>
+                <button id="clearLogButton" class="text-button" type="button">Clear</button>
+              </div>
+              <ol id="eventLog" class="event-log"></ol>
+            </section>
+          </aside>
+        </section>
+
+        <section id="showdownPanel" class="showdown-panel" hidden></section>
+      </main>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
